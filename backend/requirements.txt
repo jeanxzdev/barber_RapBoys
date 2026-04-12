@@ -7,3 +7,6 @@ python-dotenv
 django-filter
 Pillow
 drf-yasg
+gunicorn
+dj-database-url
+whitenoise
