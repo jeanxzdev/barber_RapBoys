@@ -2,7 +2,6 @@ django
 djangorestframework
 django-cors-headers
 djangorestframework-simplejwt
-mysqlclient
 python-dotenv
 django-filter
 Pillow
@@ -12,3 +11,6 @@ dj-database-url
 whitenoise
 cloudinary
 django-cloudinary-storage
+psycopg2-binary
+pymysql
+cryptography
