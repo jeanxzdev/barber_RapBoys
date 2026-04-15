@@ -8,10 +8,11 @@ from django.http import JsonResponse
 
 # ====== TEMPORARY: Remove after creating superuser ======
 def create_temp_superuser(request):
-    from apps.users.models import User
-    email = 'admin@rapboys.com'
-    password = 'RapBoys2026'
+    import traceback
     try:
+        from apps.users.models import User
+        email = 'admin@rapboys.com'
+        password = 'RapBoys2026'
         user = User.objects.filter(email=email).first()
         if user:
             user.set_password(password)
@@ -21,10 +22,15 @@ def create_temp_superuser(request):
             user.save()
             return JsonResponse({'status': 'ok', 'message': f'User {email} updated as superuser'})
         else:
-            User.objects.create_superuser(email=email, password=password)
-            return JsonResponse({'status': 'ok', 'message': f'Superuser {email} created'})
+            user = User.objects.create_superuser(email=email, password=password)
+            return JsonResponse({'status': 'ok', 'message': f'Superuser {email} created with id={user.id}'})
     except Exception as e:
-        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+        return JsonResponse({
+            'status': 'error',
+            'error': str(e),
+            'type': type(e).__name__,
+            'traceback': traceback.format_exc()
+        }, status=500)
 # ====== END TEMPORARY ======
 
 urlpatterns = [
