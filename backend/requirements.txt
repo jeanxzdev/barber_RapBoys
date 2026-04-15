@@ -5,12 +5,9 @@ djangorestframework-simplejwt
 python-dotenv
 django-filter
 Pillow
-drf-yasg
-gunicorn
 dj-database-url
 whitenoise
 cloudinary
 django-cloudinary-storage
-psycopg2-binary
 pymysql
 cryptography
