@@ -20,12 +20,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-rapboys-barber-shop-k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '.vercel.app,127.0.0.1,*').split(',')
-
-if '.vercel.app' not in ALLOWED_HOSTS:
-    ALLOWED_HOSTS.append('.vercel.app')
-if '127.0.0.1' not in ALLOWED_HOSTS:
-    ALLOWED_HOSTS.append('127.0.0.1')
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
@@ -172,10 +167,14 @@ SIMPLE_JWT = {
 }
 
 # CORS
-CORS_ALLOW_ALL_ORIGINS = True # En producción real, cambiar a dominios específicos
+CORS_ALLOWED_ORIGINS = [
+    "https://barber-rap-boys-otc8.vercel.app",
+    "http://barber-rap-boys-otc8.vercel.app",
+]
 CSRF_TRUSTED_ORIGINS = [
     "https://*.vercel.app",
-    "https://*.render.com"
+    "https://*.render.com",
+    "https://barber-rap-boys-otc8.vercel.app"
 ]
 
 # Logging
