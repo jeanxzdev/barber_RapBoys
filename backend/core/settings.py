@@ -1,4 +1,10 @@
 import os
+
+import pymysql
+
+pymysql.version_info = (1, 4, 6, "final", 0) # Engañamos a Django con la versión
+pymysql.install_as_MySQLdb()
+
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
