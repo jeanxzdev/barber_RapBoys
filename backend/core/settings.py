@@ -2,9 +2,11 @@ import os
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
-import pymysql
-
-pymysql.install_as_MySQLdb()
+try:
+    import pymysql
+    pymysql.install_as_MySQLdb()
+except ImportError:
+    pass
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -81,10 +83,18 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
-if os.environ.get('DATABASE_URL'):
+DATABASE_URL = os.environ.get('DATABASE_URL')
+if DATABASE_URL:
     DATABASES = {
-        'default': dj_database_url.config(conn_max_age=600, ssl_require=False)
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=False
+        )
     }
+    # Force PyMySQL engine for mysql:// URLs on Vercel
+    if DATABASE_URL.startswith('mysql://'):
+        DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
 else:
     DATABASES = {
         'default': {
