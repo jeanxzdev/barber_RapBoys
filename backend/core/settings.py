@@ -92,18 +92,18 @@ if DATABASE_URL:
     DATABASES = {
         'default': dj_database_url.config(
             default=DATABASE_URL,
-            conn_max_age=0,  # ← CAMBIO: 0 = cerrar inmediatamente después de usar
+            conn_max_age=0,
             ssl_require=False,
-            # Limita conexiones abiertas
-            OPTIONS={
-                'autocommit': True,
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-                'charset': 'utf8mb4',
-            }
         )
     }
     if DATABASE_URL.startswith('mysql://'):
         DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
+    
+    # Agregar OPTIONS después de config()
+    DATABASES['default']['OPTIONS'] = {
+        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        'charset': 'utf8mb4',
+    }
 else:
     DATABASES = {
         'default': {
@@ -113,7 +113,7 @@ else:
             'PASSWORD': os.environ.get('DB_PASSWORD', 'root'),
             'HOST': os.environ.get('DB_HOST', 'db'),
             'PORT': os.environ.get('DB_PORT', '3306'),
-            'CONN_MAX_AGE': 0,  # ← CAMBIO: cierra inmediatamente
+            'CONN_MAX_AGE': 0,
             'OPTIONS': {
                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
                 'charset': 'utf8mb4',
