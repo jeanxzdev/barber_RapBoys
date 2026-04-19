@@ -1,11 +1,23 @@
 import os
-import pymysql
-pymysql.version_info = (2, 2, 1, "final", 0)
-pymysql.install_as_MySQLdb()
+import sys
+
+# Parche crítico para MySQL
+try:
+    import pymysql
+    pymysql.version_info = (2, 2, 1, "final", 0)
+    pymysql.install_as_MySQLdb()
+except ImportError:
+    print("CRITICAL: pymysql not found in requirements!")
 
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 
-application = get_wsgi_application()
-app = application
+try:
+    application = get_wsgi_application()
+    app = application
+except Exception as e:
+    print(f"ERROR DURANTE EL ARRANQUE DE DJANGO: {e}")
+    import traceback
+    traceback.print_exc()
+    raise e
