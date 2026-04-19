@@ -7,17 +7,12 @@ try:
     pymysql.version_info = (2, 2, 1, "final", 0)
     pymysql.install_as_MySQLdb()
 except ImportError:
-    print("CRITICAL: pymysql not found in requirements!")
+    pass
 
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 
-try:
-    application = get_wsgi_application()
-    app = application
-except Exception as e:
-    print(f"ERROR DURANTE EL ARRANQUE DE DJANGO: {e}")
-    import traceback
-    traceback.print_exc()
-    raise e
+# Vercel necesita estas variables al nivel superior (sin indentación)
+application = get_wsgi_application()
+app = application
