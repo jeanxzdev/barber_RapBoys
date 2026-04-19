@@ -48,14 +48,13 @@ def db_check(request):
 
 urlpatterns = [
     path('db-test/', db_check),
-    # TEMPORARY: Remove after use
-    path('setup-admin-rapboys-2026/', create_temp_superuser),
     path('admin/', admin.site.urls),
-    path('api/users/', include('apps.users.urls')),
-    path('api/products/', include('apps.products.urls')),
-    path('api/orders/', include('apps.orders.urls')),
-    path('api/payments/', include('apps.payments.urls')),
-    path('api/anti-fraud/', include('apps.anti_fraud.urls')),
+    # Desactivado temporalmente para encontrar el error 500
+    # path('api/users/', include('apps.users.urls')),
+    # path('api/products/', include('apps.products.urls')),
+    # path('api/orders/', include('apps.orders.urls')),
+    # path('api/payments/', include('apps.payments.urls')),
+    # path('api/anti-fraud/', include('apps.anti_fraud.urls')),
 ]
 
 urlpatterns += [
