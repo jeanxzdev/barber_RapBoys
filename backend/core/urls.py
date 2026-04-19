@@ -50,7 +50,7 @@ urlpatterns = [
     path('db-test/', db_check),
     path('admin/', admin.site.urls),
     # Desactivado temporalmente para encontrar el error 500
-    # path('api/users/', include('apps.users.urls')),
+    path('api/users/', include('apps.users.urls')),
     # path('api/products/', include('apps.products.urls')),
     # path('api/orders/', include('apps.orders.urls')),
     # path('api/payments/', include('apps.payments.urls')),
