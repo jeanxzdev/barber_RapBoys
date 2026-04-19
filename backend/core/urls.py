@@ -48,7 +48,15 @@ def db_check(request):
 
 urlpatterns = [
     path('db-test/', db_check),
+    # Ruta secreta para asegurar que el admin existe
+    path('setup-admin-rapboys-2026/', create_temp_superuser),
     path('admin/', admin.site.urls),
+    path('api/users/', include('apps.users.urls')),
+    path('api/products/', include('apps.products.urls')),
+    # Reactiva estas cuando confirmes que las anteriores funcionan bien:
+    # path('api/orders/', include('apps.orders.urls')),
+    # path('api/payments/', include('apps.payments.urls')),
+    # path('api/anti-fraud/', include('apps.anti_fraud.urls')),
 ]
 
 urlpatterns += [
