@@ -2,7 +2,7 @@ import os
 
 import pymysql
 
-pymysql.version_info = (1, 4, 6, "final", 0) # Engañamos a Django con la versión
+pymysql.version_info = (2, 2, 1, "final", 0) # Engañamos a Django con la versión
 pymysql.install_as_MySQLdb()
 
 from pathlib import Path
