@@ -177,14 +177,12 @@ SIMPLE_JWT = {
 }
 
 # CORS
-CORS_ALLOWED_ORIGINS = [
-    "https://barber-rap-boys-otc8.vercel.app",
-    "http://barber-rap-boys-otc8.vercel.app",
-]
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
 CSRF_TRUSTED_ORIGINS = [
     "https://*.vercel.app",
     "https://*.render.com",
-    "https://barber-rap-boys-otc8.vercel.app"
 ]
 
 # Logging
