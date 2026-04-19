@@ -8,12 +8,6 @@ pymysql.install_as_MySQLdb()
 from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
-try:
-    import pymysql
-    pymysql.install_as_MySQLdb()
-except ImportError:
-    pass
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
