@@ -31,9 +31,23 @@ def create_temp_superuser(request):
             'type': type(e).__name__,
             'traceback': traceback.format_exc()
         }, status=500)
+def db_check(request):
+    from django.db import connection
+    try:
+        connection.ensure_connection()
+        return JsonResponse({'status': 'ok', 'database': 'connected'})
+    except Exception as e:
+        import traceback
+        return JsonResponse({
+            'status': 'error',
+            'message': str(e),
+            'traceback': traceback.format_exc()
+        }, status=500)
+
 # ====== END TEMPORARY ======
 
 urlpatterns = [
+    path('db-test/', db_check),
     # TEMPORARY: Remove after use
     path('setup-admin-rapboys-2026/', create_temp_superuser),
     path('admin/', admin.site.urls),
