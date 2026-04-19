@@ -20,8 +20,8 @@ load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 import dj_database_url
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-rapboys-barber-shop-key-2024')
+# DESPUÉS (genera una fuerte)
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-rapboys-barber-shop-key-2024-xHvK9pL2mN5qRsT8wXyZ1aB3cD4eF6gH7i9j0k')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -92,11 +92,16 @@ if DATABASE_URL:
     DATABASES = {
         'default': dj_database_url.config(
             default=DATABASE_URL,
-            conn_max_age=600,
-            ssl_require=False
+            conn_max_age=0,  # ← CAMBIO: 0 = cerrar inmediatamente después de usar
+            ssl_require=False,
+            # Limita conexiones abiertas
+            OPTIONS={
+                'autocommit': True,
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+                'charset': 'utf8mb4',
+            }
         )
     }
-    # Force PyMySQL engine for mysql:// URLs on Vercel
     if DATABASE_URL.startswith('mysql://'):
         DATABASES['default']['ENGINE'] = 'django.db.backends.mysql'
 else:
@@ -108,6 +113,7 @@ else:
             'PASSWORD': os.environ.get('DB_PASSWORD', 'root'),
             'HOST': os.environ.get('DB_HOST', 'db'),
             'PORT': os.environ.get('DB_PORT', '3306'),
+            'CONN_MAX_AGE': 0,  # ← CAMBIO: cierra inmediatamente
             'OPTIONS': {
                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
                 'charset': 'utf8mb4',
