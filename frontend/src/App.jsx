@@ -89,19 +89,24 @@ const PublicLayout = ({ children }) => {
   );
 };
 
-function App() {
-
+function AppContent() {
   useGoogleAnalytics();
 
   return (
-    <CartProvider>s
+    <Routes>
+      <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
+      <Route path="/cart" element={<PublicLayout><CartPage /></PublicLayout>} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/admin-dashboard/*" element={<AdminDashboard />} />
+    </Routes>
+  );
+}
+
+function App() {
+  return (
+    <CartProvider>
       <Router>
-        <Routes>
-          <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
-          <Route path="/cart" element={<PublicLayout><CartPage /></PublicLayout>} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/admin-dashboard/*" element={<AdminDashboard />} />
-        </Routes>
+        <AppContent />
       </Router>
     </CartProvider>
   );

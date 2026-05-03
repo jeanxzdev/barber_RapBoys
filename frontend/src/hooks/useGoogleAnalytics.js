@@ -22,9 +22,11 @@ const useGoogleAnalytics = () => {
             window.gtag('js', new Date());
         }
 
-        // Envío de evento de página vista en cada cambio de ruta
+        // Envío de evento de página vista
+        console.log('GA Page View:', location.pathname + location.search);
         window.gtag('config', GA_MEASUREMENT_ID, {
             page_path: location.pathname + location.search,
+            send_page_view: true // Aseguramos que se envíe la vista
         });
     }, [location]); // Se dispara cada vez que cambia la URL
 };
