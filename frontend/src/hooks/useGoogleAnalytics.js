@@ -1,27 +1,32 @@
 // src/hooks/useGoogleAnalytics.js
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+
+const GA_MEASUREMENT_ID = 'G-HGW54LC8NG';
 
 const useGoogleAnalytics = () => {
+    const location = useLocation();
+
     useEffect(() => {
-        // Evitar duplicados
-        if (window.gtag) return;
+        // Inicialización única
+        if (!window.gtag) {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+            document.head.appendChild(script);
 
-        // Script 1: Cargar la librería
-        const script1 = document.createElement('script');
-        script1.async = true;
-        script1.src = 'https://www.googletagmanager.com/gtag/js?id=G-HGW54LC8NG';
-        document.head.appendChild(script1);
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = function () {
+                window.dataLayer.push(arguments);
+            };
+            window.gtag('js', new Date());
+        }
 
-        // Script 2: Inicializar gtag (ejecutar inmediatamente)
-        window.dataLayer = window.dataLayer || [];
-        window.gtag = function () {
-            window.dataLayer.push(arguments);
-        };
-
-        // Configurar GA
-        window.gtag('js', new Date());
-        window.gtag('config', 'G-HGW54LC8NG');
-    }, []);
+        // Envío de evento de página vista en cada cambio de ruta
+        window.gtag('config', GA_MEASUREMENT_ID, {
+            page_path: location.pathname + location.search,
+        });
+    }, [location]); // Se dispara cada vez que cambia la URL
 };
 
 export default useGoogleAnalytics;
