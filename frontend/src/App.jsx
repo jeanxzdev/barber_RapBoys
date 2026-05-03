@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { ShoppingCart, User, Menu, Instagram, Facebook, Phone } from 'lucide-react';
 import { useState, useEffect, createContext, useContext } from 'react';
 
+import useGoogleAnalytics from './hooks/useGoogleAnalytics';
+
 // Paginas Publicas
 import Home from './pages/Home';
 import CartPage from './pages/Cart';
@@ -16,7 +18,7 @@ export const useCart = () => useContext(CartContext);
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
-  
+
   const addToCart = (product, quantity) => {
     setCart(prev => {
       const existing = prev.find(item => item.id === product.id);
@@ -70,7 +72,7 @@ const PublicNavbar = () => {
             {totalItems > 0 && <span className="absolute -top-2 -right-2 w-5 h-5 bg-primary text-[10px] font-black flex items-center justify-center rounded-full border-2 border-[#020202] animate-in zoom-in">{totalItems}</span>}
           </Link>
           <Link to="/login" className="p-2.5 bg-white/5 hover:bg-white/10 rounded-2xl transition-all group border border-white/5">
-             <User size={18} className="group-hover:text-primary transition-colors" />
+            <User size={18} className="group-hover:text-primary transition-colors" />
           </Link>
         </div>
       </div>
@@ -88,8 +90,11 @@ const PublicLayout = ({ children }) => {
 };
 
 function App() {
+
+  useGoogleAnalytics();
+
   return (
-    <CartProvider>
+    <CartProvider>s
       <Router>
         <Routes>
           <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
